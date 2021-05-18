@@ -1,0 +1,2 @@
+apollo client : reactive variable 사용 가능 => 상태가 변경 될 경우 render 다시 이루어 짐
+styled-component : css 역할 해주는 component. props을 받을 수 있음
