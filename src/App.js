@@ -7,6 +7,7 @@ import { darkModeVar, isLoggedInVar } from "./apollo";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, GlobalStyles, lightTheme } from "./screens/styles";
 import SignUp from "./screens/SignUp";
+import routes from "./routes";
 /*Switch select only one matched Route*/
 
 function App() {
@@ -17,11 +18,11 @@ function App() {
       <GlobalStyles />
       <Router>
         <Switch>
-          <Route path="/" exact>
+          <Route path={routes.home} exact>
             {isLogin ? <Home /> : <Login />}
           </Route>
           {!isLogin ? (
-            <Route path="/sign-up">
+            <Route path={routes.signUp}>
               <SignUp />
             </Route>
           ) : null}
