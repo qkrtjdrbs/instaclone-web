@@ -1,2 +1,15 @@
-apollo client : reactive variable 사용 가능 => 상태가 변경 될 경우 render 다시 이루어 짐
+component : 함수라고 생각하면 props는 곧 params 이다
+apollo client : backend와 연결하기 위함. reactive variable 사용 가능 => 상태가 변경 될 경우 render 다시 이루어 짐
 styled-component : css 역할 해주는 component. props을 받을 수 있음
+{children} : 해당 component의 하위 component
+const { register, watch, handleSubmit, errors, formState, getValues, setError, clearErrors, } = useForm({
+    mode: "onChange"
+}); : Input에서의 state, onChange, value 전부 해줌.
+register 함수로 value의 조건 설정, 
+watch 함수가 실시간으로 input의 value 관찰, 
+handleSubmit함수가 submit 관리,
+erros 함수가 error를 실시간으로 관찰,
+formState.isValid가 input의 제한 조건 만족하는지 useForm mode에 따라 관찰(onChange는 value 바뀔 때마다 관찰)
+getValues 함수가 form에 작성한 값들을 불러와 줌.
+setError 함수가 에러를 설정해줌
+clearErrors("error name") 함수가 error name을 가진 에러를 없애줌

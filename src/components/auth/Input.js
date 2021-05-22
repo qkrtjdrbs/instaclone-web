@@ -11,6 +11,9 @@ const Input = styled.input`
   &::placeholder {
     font-size: 12px;
   }
+  &:focus {
+    border-color: ${(props) => (props.hasError ? "tomato" : "#018af4")};
+  }
   &:focus::placeholder {
     color: transparent;
   }
