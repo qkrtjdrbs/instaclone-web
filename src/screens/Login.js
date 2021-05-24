@@ -1,11 +1,11 @@
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import {
   faFacebookSquare,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import gql from "graphql-tag";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { logUserIn } from "../apollo";
 import AuthLayout from "../components/auth/AuthLayout";
@@ -26,6 +26,12 @@ const FacebookLogin = styled.div`
   }
 `;
 
+const Notification = styled.div`
+  color: #2ecc71;
+  font-weight: 700;
+  margin-top: 20px;
+`;
+
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
     login(userName: $userName, password: $password) {
@@ -37,6 +43,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
+  //loading states from sign-up page
+  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -47,6 +55,11 @@ function Login() {
     clearErrors,
   } = useForm({
     mode: "onChange",
+    //give a defalut value by the Input name if previous states exist
+    defaultValues: {
+      userName: location?.state?.userName || "",
+      password: location?.state?.password || "",
+    },
   });
   const onCompleted = (data) => {
     const {
@@ -61,20 +74,21 @@ function Login() {
       logUserIn(token);
     }
   };
-  const [login, { loading }] = useMutation(LOGIN_MUTATION, { onCompleted });
-  const onSubmitVaild = () => {
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted,
+  });
+  const onSubmitValid = () => {
     if (loading) {
       return;
     }
     const { userName, password } = getValues();
     login({
-      variables: {
-        userName,
-        password,
-      },
+      variables: { userName, password },
     });
   };
-
+  const clearLoginError = () => {
+    clearErrors("result");
+  };
   return (
     <AuthLayout>
       <PageTitle title="Login" />
@@ -82,21 +96,18 @@ function Login() {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
-        <form onSubmit={handleSubmit(onSubmitVaild)}>
+        <Notification>{location?.state?.message}</Notification>
+        <form onSubmit={handleSubmit(onSubmitValid)}>
           <FormError message={errors?.userName?.message} />
           <Input
             ref={register({
-              required: "Username is Required",
+              required: "Username is required",
               minLength: {
                 value: 4,
-                message: "Username should be longer than 4",
-              },
-              validate: () => {
-                if (errors.result) {
-                  clearErrors("result");
-                }
+                message: "Username should be longer than 4 chars.",
               },
             })}
+            onFocus={clearLoginError}
             name="userName"
             type="text"
             placeholder="Username"
@@ -105,13 +116,9 @@ function Login() {
           <FormError message={errors?.password?.message} />
           <Input
             ref={register({
-              required: "Password is Required",
-              validate: () => {
-                if (errors.result) {
-                  clearErrors("result");
-                }
-              },
+              required: "Password is required.",
             })}
+            onFocus={clearLoginError}
             name="password"
             type="password"
             placeholder="Password"
@@ -120,7 +127,7 @@ function Login() {
           <FormError message={errors?.result?.message} />
           <Button
             type="submit"
-            value={loading ? "loading..." : "Log in"}
+            value={loading ? "Loading..." : "Log in"}
             disabled={!formState.isValid || loading}
           />
         </form>
@@ -132,11 +139,10 @@ function Login() {
       </FormBox>
       <BottomBox
         cta="Don't have an account?"
-        link={routes.signUp}
         linkText="Sign up"
+        link={routes.signUp}
       />
     </AuthLayout>
   );
 }
-
 export default Login;

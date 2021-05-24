@@ -13,3 +13,10 @@ formState.isValid가 input의 제한 조건 만족하는지 useForm mode에 따�
 getValues 함수가 form에 작성한 값들을 불러와 줌.
 setError 함수가 에러를 설정해줌
 clearErrors("error name") 함수가 error name을 가진 에러를 없애줌
+
+
+useMutation(LOGIN_MUTATION, { onCompleted }) : 리턴값은 배열.
+배열 첫 인자는 mutation 호출 순간 호출해야 하는 함수.
+두 번째 인자는 useQuery처럼 {loading, error, ...} 으로 사용 가능
+LOGIN_MUTATION는 원하는 작업을 실행 할 mutation,
+{onCompleted}는 콜백 함수로, mutation의 결과를 가지고 함수를 작성할 수 있음
