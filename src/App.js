@@ -9,10 +9,11 @@ import { darkTheme, GlobalStyles, lightTheme } from "./screens/styles";
 import SignUp from "./screens/SignUp";
 import routes from "./routes";
 import { HelmetProvider } from "react-helmet-async";
+import Layout from "./components/Layout";
 /*Switch select only one matched Route*/
 
 function App() {
-  const isLogin = useReactiveVar(isLoggedInVar);
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   const darkMode = useReactiveVar(darkModeVar);
   return (
     <ApolloProvider client={client}>
@@ -22,9 +23,15 @@ function App() {
           <Router>
             <Switch>
               <Route path={routes.home} exact>
-                {isLogin ? <Home /> : <Login />}
+                {isLoggedIn ? (
+                  <Layout>
+                    <Home />
+                  </Layout>
+                ) : (
+                  <Login />
+                )}
               </Route>
-              {!isLogin ? (
+              {!isLoggedIn ? (
                 <Route path={routes.signUp}>
                   <SignUp />
                 </Route>
