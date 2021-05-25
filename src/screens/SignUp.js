@@ -60,7 +60,7 @@ function SignUp() {
     }
     //if no error, redirect to home with state
     history.push(routes.home, {
-      message: "Account created.",
+      message: "Account created. please log in.",
       userName,
       password,
     });
