@@ -15,9 +15,10 @@ export const logUserIn = (token) => {
   localStorage.setItem(TOKEN, token);
   isLoggedInVar(true);
 };
-export const logUserOut = () => {
+export const logUserOut = (history) => {
   localStorage.removeItem(TOKEN);
   //kill all previous states
+  history.replace();
   window.location.reload();
 };
 
