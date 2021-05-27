@@ -18,7 +18,9 @@ export const logUserIn = (token) => {
 export const logUserOut = (history) => {
   localStorage.removeItem(TOKEN);
   //kill all previous states
-  history.replace();
+  if (history) {
+    history.replace();
+  }
   window.location.reload();
 };
 

@@ -68,10 +68,33 @@ const Likes = styled(FatText)`
   display: block;
 `;
 function Photo({ id, user, file, isLiked, likes }) {
-  const [toggleLike, { loading }] = useMutation(TOGGLE_LIKE_MUTATION, {
+  const updateToggleLike = (cache, result) => {
+    const {
+      data: {
+        toggleLike: { ok },
+      },
+    } = result;
+    if (ok) {
+      cache.writeFragment({
+        id: `Photo:${id}`,
+        fragment: gql`
+          fragment WHATEVER on Photo {
+            isLiked
+            likes
+          }
+        `,
+        data: {
+          isLiked: !isLiked,
+          likes: isLiked ? likes - 1 : likes + 1,
+        },
+      });
+    }
+  };
+  const [toggleLike] = useMutation(TOGGLE_LIKE_MUTATION, {
     variables: {
       id,
     },
+    update: updateToggleLike,
   });
   return (
     <PhotoContainer key={id}>

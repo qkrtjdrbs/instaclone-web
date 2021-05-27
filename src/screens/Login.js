@@ -55,7 +55,7 @@ function Login() {
     clearErrors,
   } = useForm({
     mode: "onChange",
-    //give a defalut value by the Input name if previous states exist
+    //give a default value by the Input name if previous states exist
     defaultValues: {
       userName: location?.state?.userName || "",
       password: location?.state?.password || "",
