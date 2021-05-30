@@ -1,8 +1,8 @@
 component : 함수라고 생각하면 props는 곧 params 이다
 apollo client : backend와 연결하기 위함. reactive variable 사용 가능 => 상태가 변경 될 경우 render 다시 이루어 짐
 styled-component : css 역할 해주는 component. props을 받을 수 있음
-{children} : 해당 component의 하위 component
-const { register, watch, handleSubmit, errors, formState, getValues, setError, clearErrors, } = useForm({
+{children} : 해당 component의 하위 component들
+const { register, watch, handleSubmit, errors, formState, getValues, setError, clearErrors, setValue } = useForm({
     mode: "onChange"
 }); : Input에서의 state, onChange, value 전부 해줌.
 register 함수로 value의 조건 설정, 
@@ -13,15 +13,18 @@ formState.isValid가 input의 제한 조건 만족하는지 useForm mode에 따�
 getValues 함수가 form에 작성한 값들을 불러와 줌.
 setError 함수가 에러를 설정해줌
 clearErrors("error name") 함수가 error name을 가진 에러를 없애줌
+mutation실행 후 setValue("input name", "") 함수가 해당 name을 input의 value를 비게 해줌.
 
 useMutation(LOGIN_MUTATION, { onCompleted }, refetchQueries: [{query: ~~}], update: 함수명) : 리턴값은 배열.
-배열 첫 인자는 mutation 호출 순간 호출해야 하는 함수.
+배열 첫 인자는 mutation 호출 순간 호출해야 하는 함수.(mutation 실행하는 함수)
 두 번째 인자는 useQuery처럼 {loading, error, ...} 으로 사용 가능
 LOGIN_MUTATION는 원하는 작업을 실행 할 mutation,
 {onCompleted}는 콜백 함수로, mutation의 결과를 가지고 함수를 작성할 수 있음
 refetchQueries는 []안의 쿼리가 일어날 때 창을 새로고침 하지 않고도 데이터를 다시 불러옴.
 그러나 규모가 아주 작은 쿼리에서만 사용하는 것이 효율이 좋음, 어느 한 부분만 업데이트 하려고 전체를 fetch 해야하기 때문
 그래서 update 옵션에 update 될 경우 실행 될 함수를 정의하는데, 그 함수에서 직접 apollo server의 cache에 새로 업데이트할 data fragment를 작성한다.
+data fragment를 직접 작성하는 것 대신, cache.modify()를 사용하여 간단하게 작성할 수 있다.
+
 
 token 유효성 검사 : frontend에서 apollo client로 웹 페이지의 ls에 저장되어 있는 token 값을 http header에
 붙여서 보낸다 -> backend에서 header를 받아서 token을 verify한다. 유효하지 않은 토큰이면 null을 리턴함.
