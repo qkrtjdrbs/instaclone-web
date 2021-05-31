@@ -6,7 +6,6 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as SolidHeart } from "@fortawesome/free-solid-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import Avatar from "../Avatar";
@@ -14,6 +13,7 @@ import { FatText } from "../shared";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import Comments from "./Comments";
+import { Link } from "react-router-dom";
 
 const TOGGLE_LIKE_MUTATION = gql`
   mutation toggleLike($id: Int!) {
@@ -114,8 +114,12 @@ function Photo({
   return (
     <PhotoContainer key={id}>
       <PhotoHeader>
-        <Avatar url={user.avatar} lg />
-        <Username>{user.userName}</Username>
+        <Link to={`/users/${user.userName}`}>
+          <Avatar url={user.avatar} lg />
+        </Link>
+        <Link to={`/users/${user.userName}`}>
+          <Username>{user.userName}</Username>
+        </Link>
       </PhotoHeader>
       <PhotoFile src={file} />
       <PhotoData>

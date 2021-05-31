@@ -71,7 +71,9 @@ function Comment({ photoId, id, author, payload, isMine }) {
   };
   return (
     <CommentContainer>
-      <FatText>{author}</FatText>
+      <Link to={`/users/${author}`}>
+        <FatText>{author}</FatText>
+      </Link>
       <CommentCapt>
         {payload.split(" ").map((word, index) =>
           /#[\w]+/.test(`${word}`) ? (

@@ -2,6 +2,7 @@ component : 함수라고 생각하면 props는 곧 params 이다
 apollo client : backend와 연결하기 위함. reactive variable 사용 가능 => 상태가 변경 될 경우 render 다시 이루어 짐
 styled-component : css 역할 해주는 component. props을 받을 수 있음
 {children} : 해당 component의 하위 component들
+
 const { register, watch, handleSubmit, errors, formState, getValues, setError, clearErrors, setValue } = useForm({
     mode: "onChange"
 }); : Input에서의 state, onChange, value 전부 해줌.
@@ -24,7 +25,6 @@ refetchQueries는 []안의 쿼리가 일어날 때 창을 새로고침 하지 �
 그러나 규모가 아주 작은 쿼리에서만 사용하는 것이 효율이 좋음, 어느 한 부분만 업데이트 하려고 전체를 fetch 해야하기 때문
 그래서 update 옵션에 update 될 경우 실행 될 함수를 정의하는데, 그 함수에서 직접 apollo server의 cache에 새로 업데이트할 data fragment를 작성한다.
 data fragment를 직접 작성하는 것 대신, cache.modify()를 사용하여 간단하게 작성할 수 있다.
-
 
 token 유효성 검사 : frontend에서 apollo client로 웹 페이지의 ls에 저장되어 있는 token 값을 http header에
 붙여서 보낸다 -> backend에서 header를 받아서 token을 verify한다. 유효하지 않은 토큰이면 null을 리턴함.
@@ -53,4 +53,5 @@ Hashtag Parsing 방법 2 : payload.split(" ").map((word, index) => /#[\w]+/.test
 1. .split() : 공백 기준으로 단어 쪼개서 배열로 만들기
 2. .map() : 그 배열의 요소를 하나 씩 보면서 '#단어'의 형태인지 test하기 (true false 리턴)
 3. '#단어'의 형태라면 <Link>태그로 링크를 만들고, 아니라면 그냥 단어 리턴(key 부여 문제때문에 <React.Fragment>태그 사용 )
- 
+
+useParams() : Route에서 정의한 url의 특정 parameters ex) /users/:username의 username 불러온다. 
