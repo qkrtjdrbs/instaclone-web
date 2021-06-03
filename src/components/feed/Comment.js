@@ -75,7 +75,7 @@ function Comment({ photoId, id, author, payload, isMine }) {
         <FatText>{author}</FatText>
       </Link>
       <CommentCapt>
-        {payload.split(" ").map((word, index) =>
+        {payload?.split(" ").map((word, index) =>
           /#[\w]+/.test(`${word}`) ? (
             <React.Fragment key={index}>
               <Link to={`/hashtags/${word}`}>{word}</Link>{" "}
@@ -94,7 +94,7 @@ Comment.propTypes = {
   id: PropTypes.number,
   photoId: PropTypes.number,
   author: PropTypes.string.isRequired,
-  payload: PropTypes.string.isRequired,
+  payload: PropTypes.string,
   isMine: PropTypes.bool,
 };
 
