@@ -27,8 +27,13 @@ const FEED_QUERY = gql`
 `;
 
 const Home = () => {
-  const { data } = useQuery(FEED_QUERY);
+  //Just in case the token is broken, don't use Apollo client cache.
+  const { data } = useQuery(FEED_QUERY, { fetchPolicy: "no-cache" });
   const history = useHistory();
+  if (data?.seeFeed === null) {
+    //if token is currupted, log out.
+    logUserOut();
+  }
   return (
     <div>
       <PageTitle title="Home" />

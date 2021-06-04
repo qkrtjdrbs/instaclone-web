@@ -139,6 +139,7 @@ function Profile() {
     variables: {
       userName,
     },
+    fetchPolicy: "no-cache",
   });
 
   const unfollowUserUpdate = (cache, result) => {

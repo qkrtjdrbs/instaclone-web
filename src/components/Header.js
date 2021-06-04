@@ -73,7 +73,7 @@ function Header() {
               </Icon>
             </IconsContainer>
           ) : (
-            <Link href={routes.home}>
+            <Link to={routes.home}>
               <Button>Login</Button>
             </Link>
           )}
